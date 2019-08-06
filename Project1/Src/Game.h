@@ -24,10 +24,13 @@ class Game {
   float FrameTime_;
   bool isRunning_;
 
- private: //class objects
-  Texture* Tex;
+ public:
+  
+ private:
+  Texture* Tex; 
   Map Map_;
-  Map* MapPointer;
-  GameObjects* Mario;
+  Map* mapPointer;
+  GameObjects Objects;
+  Player* Mario;
   SDL_Texture* BackgroundMap;  
 };

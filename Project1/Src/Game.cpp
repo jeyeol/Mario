@@ -6,15 +6,11 @@ SDL_Rect Game::Camera = {0, 0, 800, 640};
 
 Game::Game() {
   Tex = new Texture();
-  MapPointer = &Map_;
-  Mario = new GameObjects(MapPointer, "Assets\\mario.png", 4, 100);
-  // std::unique_ptr<GameObjects> Mario(new GameObjects(MapPointer));
 }
 
 Game::~Game() {
   SDL_DestroyWindow(Window);
-  SDL_DestroyRenderer(Rend);
-  //delete Mario;
+  SDL_DestroyRenderer(Rend);  
   delete Tex;  
 }
 void Game::HandleEvnt() {
@@ -37,29 +33,32 @@ void Game::Init(int w, int h) {
   Rend = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED |SDL_RENDERER_PRESENTVSYNC);
   if (Game::Rend == nullptr)
     std::cout << "Renderer failed to create" << std::endl;
-  SDL_SetRenderDrawColor(Game::Rend, 255, 255, 255, 255);
-  Map_.InitMapComponents();
-  Map_.Load("Assets\\mapsprite\\TILE_INFO.txt");
+  SDL_SetRenderDrawColor(Game::Rend, 255, 255, 255, 255);  
+  Map_.InitMapComponents(); // init maps
+  Map_.Load("Assets\\mapsprite\\TILE_INFO.txt"); //load map from text file
+  Objects.Init();
   SDL_Rect MarioSRC = {80, 34, 16, 16};
   SDL_Rect MarioDst = {80, 34, 16, 16};
-  Mario->Init("Assets\\mario.png", "Mario", 32, 351, MarioSRC, MarioDst, 2);
+  //Mario->Init("Assets\\mario.png", "Mario", 32, 351, MarioSRC, MarioDst, 2);  
   isRunning_ = true;
+  mapPointer = &Map_;
+  Objects = GameObjects(mapPointer);
 }
 void Game::UpdateCamera() {
-  Camera.x = Mario->Position.x - 400;
-  Camera.y = Mario->Position.y - 320;
+  Camera.x = 400;
+  Camera.y = 320;
   if (Camera.x < 0) Camera.x = 0;
   if (Camera.y < 0) Camera.y = 0;
 }
 void Game::Render() {
   SDL_RenderClear(Game::Rend);
   Map_.Draw();
-  Mario->Draw();
+  Objects.Draw();
   SDL_RenderPresent(Game::Rend);
 }
 
 void Game::Update() {
-  Mario->Updates();
+  Objects.Updates();
   UpdateCamera();
   Map_.Update();
 }

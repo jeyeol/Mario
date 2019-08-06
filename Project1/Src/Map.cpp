@@ -37,7 +37,7 @@ SDL_Rect Map::DestRectBigUnit(int scaleW, int scaleH, int x, int y) {
   return Rect;
 }
 
-std::vector<std::string> Map::Load(const char* fileName) {
+std::vector<std::string>& Map::Load(const char* fileName) {
   std::ifstream file;
   file.open(fileName);
   if (file.fail()) {
@@ -52,6 +52,7 @@ std::vector<std::string> Map::Load(const char* fileName) {
   }
   file.close();
   return Mapdata;
+  
 }
 bool Map::isSolid(char tile) {
   if (tile != '.')
@@ -61,45 +62,47 @@ bool Map::isSolid(char tile) {
 }
 SDL_Rect Map::BackgroundRect() {
   SDL_Rect Rect; 
-  Rect.x = Game::Camera.x;
+  Rect.x = 0;
   Rect.y = 0;
-  Rect.w = 3392;
+  Rect.w = 3392*Scale;
   Rect.h = 920;
   return Rect;
 }
 void Map::Draw() {
-  SDL_Rect Srt1 = {Game::Camera.x, 0, 3392, 460};
-  SDL_Rect Drt1 = {Game::Camera.x, 0, 3392, 640};
+  SDL_Rect Srt1 = {0-Game::Camera.x, 0, 3392, 460};
+  SDL_Rect Drt1 = {0-Game::Camera.x, 0, 3392*Scale, 460*Scale};
 
-  Texture::Draw(background, BackgroundRect(), Drt1, "Background");
+  Texture::Draw(background, BackgroundRect(), Drt1, "Background", flip);
 
   for (int i = 0; i < Mapdata.size(); i++) {
     for (int j = 0; j < Mapdata[i].size(); j++) {
       block = Mapdata[i][j];
       switch (block) {
         case '?':
-          Texture::Draw(itembox, SourceRect(1, 1), DestRect(j, i), "itembox");
+          Texture::Draw(itembox, SourceRect(1, 1), DestRect(j, i), "itembox", flip);
           break;
         case 'b':
-          Texture::Draw(Block, SourceRect(1, 1), DestRect(j, i),
-                        "block");  // brown block
+          Texture::Draw(Block, SourceRect(1, 1), DestRect(j, i), "block",
+                        flip);  // brown block
           break;
         case 'x':
-          Texture::Draw(xBlock, SourceRect(1, 1), DestRect(j, i), "xblock");
+          Texture::Draw(xBlock, SourceRect(1, 1), DestRect(j, i), "xblock",
+                        flip);
           break;
         case 'g':
-          Texture::Draw(ground, SourceRect(1, 1), DestRect(j, i), "ground");
+          Texture::Draw(ground, SourceRect(1, 1), DestRect(j, i), "ground",
+                        flip);
           break;
         case '.':
           Solid = false;
           break;
         case 'p':
           Texture::Draw(smallPipe, SourceRect(2, 2),
-                        DestRectBigUnit(4, 4, j, i), "shortPipe");
+                        DestRectBigUnit(4, 4, j, i), "shortPipe", flip);
           break;
         case 'P':
           Texture::Draw(smallPipe, SourceRect(2,2),
-                        DestRectBigUnit(4, 6, j, i), "longPipe");
+                        DestRectBigUnit(4, 6, j, i), "longPipe", flip);
           break;
         default:
           Solid = false;
@@ -109,7 +112,7 @@ void Map::Draw() {
   }
 }
 
-void Map::Update() {}
+void Map::Update() {  }
 
 char Map::GetTile(int x, int y) {
   int X, Y;

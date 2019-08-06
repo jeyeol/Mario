@@ -5,26 +5,31 @@
 #include "Map.h"
 #include "Texture.h"
 #include "Vector2D.h"
+#include "gameobjects/Player.h"
+
 
 class GameObjects {
  public:
-  Vector2D Position;
-  Vector2D Velocity;
-  Vector2D Gravity;
+  //Vector2D Position;
+  //Vector2D Velocity;
+  //Vector2D Gravity;
   GameObjects(){};
-  GameObjects(Map* map) { this->map = map; animated=false;};
-  GameObjects(Map* map, const char* path, int nframes, int mspeed);
+  GameObjects(Map* map);
   ~GameObjects();
-  void Init(const char* path, std::string name, int x, int y, SDL_Rect Src,
-            SDL_Rect DsR, int Scale);
+  void Init();
   void Draw();
   void Updates();
-  bool Collision(float veloX, float veloY);
-  bool OnGround();
+  //bool Collision(float veloX, float veloY);
+  //bool OnGround();
   int ChangeScale(int size);
   void Move();
+  void PlayAnimation(std::string name);
 
+ public:
+  Player* player;
  private:
+  SDL_RendererFlip flip = SDL_FLIP_NONE;
+  std::map<std::string, Animation> animation;
   bool CanJump;  
   float MaxVelocity=8;
   Map* map;
@@ -42,7 +47,9 @@ class GameObjects {
   bool OnGround_;  
   private: // these are variables for animation
   int frames = 0;
+  int index;
   bool animated = false;
   int AnimationSpeed = 100;
+  
 
 };

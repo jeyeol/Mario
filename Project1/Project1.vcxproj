@@ -135,21 +135,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\gameobjects\Collision.cpp" />
     <ClCompile Include="Src\Game.cpp" />
     <ClCompile Include="Src\GameObjects.cpp" />
     <ClCompile Include="Src\KeyboardInput.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Map.cpp" />
+    <ClCompile Include="Src\gameobjects\Player.cpp" />
     <ClCompile Include="Src\Texture.cpp" />
     <ClCompile Include="Src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Animation.h" />
     <ClInclude Include="Src\Camera.h" />
+    <ClInclude Include="Src\gameobjects\Collision.h" />
     <ClInclude Include="Src\Game.h" />
     <ClInclude Include="Src\GameObjects.h" />
     <ClInclude Include="Src\KeyboradInput.h" />
     <ClInclude Include="Src\Map.h" />
+    <ClInclude Include="Src\gameobjects\Player.h" />
     <ClInclude Include="Src\Vector2D.h" />
     <ClInclude Include="Src\Texture.h" />
   </ItemGroup>

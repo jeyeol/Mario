@@ -6,13 +6,15 @@
 #include <vector>
 #include "include/SDL2/SDL.h"
 #include "include/SDL2/SDL_image.h"
+#include "Animation.h"
+#include <map>
 
 class Map {
  public:
   Map();
   ~Map();
   void InitMapComponents();
-  std::vector<std::string> Load(const char* fileName);
+  std::vector<std::string>& Load(const char* fileName);
   void Draw();
   void Update();
   SDL_Rect BackgroundRect();
@@ -35,6 +37,7 @@ class Map {
   SDL_Rect Dst;
   bool Solid;
   int Scale = 2;
+  SDL_RendererFlip flip;
 
  private:
   SDL_Texture* smallPipe;

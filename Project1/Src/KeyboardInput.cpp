@@ -8,20 +8,20 @@ void KeyboardInput::KeyControll(float& veloX, float& veloY, bool& onGround) {
   if (Game::Evnt.type == SDL_KEYDOWN) {
     switch (Game::Evnt.key.keysym.sym) {
       case SDLK_UP:
-         if(onGround) veloY = -23;
+         if(onGround) veloY = -20;
 		 if (!onGround)
 		 {
-           veloY = veloY+1.0;
+           veloY = veloY+0.75;
 		 }
           break;
       case SDLK_DOWN:
         veloY = 2;
         break;
       case SDLK_RIGHT:
-        veloX = 6;
+        veloX = 4;
         break;
       case SDLK_LEFT:
-        veloX = -6;
+        veloX = -4;
         break;
       default:
         break;

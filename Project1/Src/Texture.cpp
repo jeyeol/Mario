@@ -18,8 +18,8 @@ SDL_Texture* Texture::LoadTexture(const char* path) {
 }
 
 void Texture::Draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect drc,
-                   std::string ImageName) {
-  SDL_RenderCopy(Game::Rend, tex, &src, &drc);
+                   std::string ImageName, SDL_RendererFlip flip) {
+  SDL_RenderCopyEx(Game::Rend, tex, &src, &drc, NULL, NULL, flip);
 }
 
 SDL_Rect Texture::ImageRect(int x, int y, int w, int h) {
